@@ -95,7 +95,7 @@ write(6,'(/a,i2)') 'log derivativve data at irc(l1)+2+x, where x=',x
    write(6,'(a/)') 'l, energy, all-electron, pseudopotential'
    do ii = 1, npsh
      epsh = epsh2 - depsh * dfloat(ii - 1)
-     write(6,'(a, i6, 3f12.6)') '! ',ll, epsh, pshf(ii), pshp(ii)
+     write(6,'(a, i6, i6, 3f12.6)') '! ',ll, x, epsh, pshf(ii), pshp(ii)
    end do
  end do
 end do
