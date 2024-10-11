@@ -42,3 +42,4 @@ FFLAGS += -I/usr/local/libxc/include
 
 OBJS_LIBXC =	functionals.o exc_libxc.o 
 
+LIBS += -static-libgfortran -static-libgcc
