@@ -57,7 +57,7 @@
 !Output variables - printing only
 
 !Local variables
- integer :: ii,irphs,ll,l1,npsh
+ integer :: ii,irphs,ll,l1,npsh,x
  real(dp) :: epsh
 
  real(dp),allocatable :: pshf(:),pshp(:)
@@ -68,14 +68,15 @@
 
 ! loop for phase shift calculation -- full, then local or Kleinman-
 ! Bylander / Vanderbilt
- 
+do x = 0, 101, 20
+write(6,'(/a,i2)') 'log derivativve data at irc(l1)+2+x, where x=',x
  do l1 = 1, 4
 
    ll = l1 - 1
    if(ll<=lmax) then
-     irphs=irc(l1)+2
+     irphs=irc(l1)+2 + x
    else
-     irphs=irc(lloc+1)
+     irphs=irc(lloc+1) + x
    end if
 
    call fphsft(ll,epsh2,depsh,pshf,rr,vfull,zz,mmax,irphs,npsh,srel)
@@ -94,9 +95,10 @@
    write(6,'(a/)') 'l, energy, all-electron, pseudopotential'
    do ii = 1, npsh
      epsh = epsh2 - depsh * dfloat(ii - 1)
-     write(6,'(a, i6, 3f12.6)') '! ',ll, epsh, pshf(ii), pshp(ii)
+     write(6,'(a, i6, i6, 3f12.6)') '! ',ll, x, epsh, pshf(ii), pshp(ii)
    end do
  end do
+end do
  deallocate(pshf,pshp)
  return
  end subroutine run_phsft

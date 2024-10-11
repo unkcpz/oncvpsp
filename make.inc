@@ -43,3 +43,4 @@ FFLAGS += -I/Users/mverstra/CODES/LIBXC/6.0.0/include
 FCCPPFLAGS += -I/Users/mverstra/CODES/LIBXC/6.0.0/include
 OBJS_LIBXC =	functionals.o exc_libxc.o 
 
+LIBS += -static-libgfortran -static-libgcc
