@@ -35,6 +35,7 @@ OBJS_LIBXC =	exc_libxc_stub.o
 # make clean in src before rebuilding after changing this
 
 LIBS += -L/usr/local/libxc/lib -lxcf90 -lxc
+LIBS += -static-libgfortran -static-libgcc
 FFLAGS += -I/usr/local/libxc/include
 
 #LIBS += -L/home/drh/abinit/fallbacks/exports/lib -lxcf90 -lxc

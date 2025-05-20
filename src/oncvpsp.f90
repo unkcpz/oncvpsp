@@ -50,7 +50,7 @@
  integer :: nproj(6),npx(6),lpx(6)
  integer :: ncon(6),nbas(6)
 
- real(dp) :: al,amesh,csc,csc1,deblt,depsh,depsht,drl,eeel
+ real(dp) :: al,amesh,csc,csc1,deblt,depsh,depsht,drl,eeel, rxpsh
  real(dp) :: eeig,eexc
  real(dp) :: emax,epsh1,epsh1t,epsh2,epsh2t
  real(dp) :: et,etest,emin,sls
@@ -155,7 +155,7 @@
 
 ! log derivative analysis
  call cmtskp(inline)
- read(5,*,iostat=ios) epsh1, epsh2, depsh
+ read(5,*,iostat=ios) epsh1, epsh2, depsh, rxpsh
  call read_error(ios,inline)
 
 ! output grid
@@ -594,7 +594,7 @@
 
 
  call run_phsft(lmax,lloc,nproj,epa,epsh1,epsh2,depsh,vkb,evkb, &
-&               rr,vfull,vp,zz,mmax,mxprj,irc,srel)
+&               rr,vfull,vp,zz,mmax,mxprj,irc,rxpsh,srel)
  
  call gnu_script(epa,evkb,lmax,lloc,mxprj,nproj)
 

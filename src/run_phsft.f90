@@ -17,7 +17,7 @@
 ! along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !
  subroutine run_phsft(lmax,lloc,nproj,epa,epsh1,epsh2,depsh,vkb,evkb, &
-&                     rr,vfull,vp,zz,mmax,mxprj,irc,srel)
+&                     rr,vfull,vp,zz,mmax,mxprj,irc,rxpsh,srel)
 
 ! computes log derivatives, actually atan(r * ((d psi(r)/dr)/psi(r)))
 ! at rr(irphs) comparing all-electron with Vanderbilt-Kleinman-Bylander
@@ -49,10 +49,11 @@
 !Input variables
  integer :: lmax,lloc,mmax,mxprj
  integer :: nproj(6),irc(6)
- real(dp) :: epsh1,epsh2,depsh,zz
- real(dp) :: rr(mmax),vp(mmax,5),epa(mxprj,6)
+ real(dp) :: epsh1,epsh2,depsh,zz,rxpsh
+ real(dp) :: rr(mmax),vp(mmax,5),epa(mxprj,6), xirphs
  real(dp) :: vfull(mmax),vkb(mmax,mxprj,4),evkb(mxprj,4)
  logical :: srel
+ character(len=50) :: errmsg  ! Buffer for error message
 
 !Output variables - printing only
 
@@ -77,6 +78,16 @@
    else
      irphs=irc(lloc+1)
    end if
+
+   ! Find the closest index
+   xirphs = minloc(abs(rr - rxpsh), dim=1)
+
+    if (xirphs < irphs) then
+        write(errmsg, '(A, F6.2)') "r to plot logder too small: ", rxpsh
+        error stop errmsg
+    else
+        irphs = xirphs
+    end if
 
    call fphsft(ll,epsh2,depsh,pshf,rr,vfull,zz,mmax,irphs,npsh,srel)
    if(ll .eq. lloc) then  
